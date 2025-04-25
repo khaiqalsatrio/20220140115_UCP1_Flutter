@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ucp1_115/presentation/home_page.dart';
 import 'package:flutter_ucp1_115/presentation/login_page.dart';
+import 'package:flutter_ucp1_115/presentation/piket_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,8 +21,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => const LoginPage(), // Menunjukkan halaman login
         '/home': (context) => const HomePage(), // Menunjukkan halaman utama
-        '/order':
-            (context) => const HomePage(), // Menunjukkan halaman pemesanan
+        '/piket':
+            (context) => const PiketPage(), // Menunjukkan halaman pemesanan
       },
     );
   }
