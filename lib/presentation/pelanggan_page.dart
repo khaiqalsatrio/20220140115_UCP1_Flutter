@@ -9,8 +9,6 @@ class PelangganPage extends StatefulWidget {
 
 class _PelangganPageState extends State<PelangganPage> {
   final TextEditingController namaController = TextEditingController();
-  final TextEditingController tanggalController = TextEditingController();
-  final TextEditingController tugasController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController noHpController = TextEditingController();
   final TextEditingController alamatController = TextEditingController();
@@ -41,7 +39,7 @@ class _PelangganPageState extends State<PelangganPage> {
               ),
               const SizedBox(height: 16),
               TextFormField(
-                controller: tanggalController,
+                controller: emailController,
                 decoration: const InputDecoration(labelText: 'Email'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -52,7 +50,7 @@ class _PelangganPageState extends State<PelangganPage> {
               ),
               const SizedBox(height: 16),
               TextFormField(
-                controller: tugasController,
+                controller: noHpController,
                 decoration: const InputDecoration(labelText: 'No Hp'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -63,17 +61,11 @@ class _PelangganPageState extends State<PelangganPage> {
               ),
               const SizedBox(height: 16),
               TextFormField(
-                controller: emailController,
+                controller: alamatController,
                 decoration: const InputDecoration(labelText: 'Alamat'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Silakan masukkan Alamat';
-                  }
-                  // Validasi format email
-                  if (!RegExp(
-                    r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-                  ).hasMatch(value)) {
-                    return 'Format email tidak valid';
                   }
                   return null;
                 },
@@ -95,11 +87,7 @@ class _PelangganPageState extends State<PelangganPage> {
                 decoration: const InputDecoration(labelText: 'Kode Pos'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Silakan masukkan kode pos';
-                  }
-                  // Validasi format kode pos
-                  if (!RegExp(r"^\d{5}$").hasMatch(value)) {
-                    return 'Format kode pos tidak valid';
+                    return 'Silakan masukkan Kode Pos';
                   }
                   return null;
                 },
@@ -114,8 +102,6 @@ class _PelangganPageState extends State<PelangganPage> {
                         builder:
                             (context) => DetailPiketPage(
                               namaAnggota: namaController.text,
-                              tanggal: tanggalController.text,
-                              tugas: tugasController.text,
                               email: emailController.text,
                               noHp: noHpController.text,
                               alamat: alamatController.text,
@@ -138,8 +124,6 @@ class _PelangganPageState extends State<PelangganPage> {
 
 class DetailPiketPage extends StatelessWidget {
   final String namaAnggota;
-  final String tanggal;
-  final String tugas;
   final String email;
   final String noHp;
   final String alamat;
@@ -149,8 +133,6 @@ class DetailPiketPage extends StatelessWidget {
   const DetailPiketPage({
     super.key,
     required this.namaAnggota,
-    required this.tanggal,
-    required this.tugas,
     required this.email,
     required this.noHp,
     required this.alamat,
@@ -168,8 +150,6 @@ class DetailPiketPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Nama: $namaAnggota'),
-            Text('Tanggal: $tanggal'),
-            Text('Tugas: $tugas'),
             Text('Email: $email'),
             Text('No HP: $noHp'),
             Text('Alamat: $alamat'),
