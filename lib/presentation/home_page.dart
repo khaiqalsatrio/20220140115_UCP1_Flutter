@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ucp1_115/presentation/piket_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,31 +12,82 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Home Page')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: GridView.count(
+          crossAxisCount: 2, // Menampilkan dua kolom dalam satu baris
+          crossAxisSpacing: 16.0, // Jarak antar kolom
+          mainAxisSpacing: 16.0, // Jarak antar baris
           children: [
-            const Text('Selamat datang di home page'),
-            const SizedBox(height: 8),
-            ElevatedButton(
+            DashboardCard(
+              title: 'Piket',
+              icon: Icons.circle,
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const PiketPage()),
                 );
               },
-              child: const Text('Order Now'),
             ),
-            // ElevatedButton(
-            //   onPressed: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => const ),
-            //     );
-            //   },
-            //   child: const Text('Order Now'),
-            // ),
+            DashboardCard(
+              title: 'pelanggan',
+              icon: Icons.circle,
+              onPressed: () {
+                // Ganti dengan logika pengaturan atau halaman pengaturan
+              },
+            ),
+            DashboardCard(
+              title: 'Profile',
+              icon: Icons.circle,
+              onPressed: () {
+                // Ganti dengan logika halaman profile
+              },
+            ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class DashboardCard extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final VoidCallback onPressed;
+
+  const DashboardCard({
+    required this.title,
+    required this.icon,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Card(
+        elevation: 5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        child: Container(
+          padding: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.blue[50],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 50, color: Colors.blue),
+              const SizedBox(height: 8),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
