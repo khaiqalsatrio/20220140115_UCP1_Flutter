@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ucp1_115/presentation/pelanggan_page.dart';
 import 'package:flutter_ucp1_115/presentation/piket_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -33,7 +34,12 @@ class _HomePageState extends State<HomePage> {
               title: 'pelanggan',
               icon: Icons.circle,
               onPressed: () {
-                // Ganti dengan logika pengaturan atau halaman pengaturan
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PelangganPage(),
+                  ),
+                );
               },
             ),
             DashboardCard(
