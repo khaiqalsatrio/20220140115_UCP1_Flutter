@@ -37,10 +37,13 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             DashboardCard(
-              title: 'Profile',
+              title: 'barang masuk atau keluar',
               icon: Icons.circle,
               onPressed: () {
-                // Ganti dengan logika halaman profile
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PiketPage()),
+                );
               },
             ),
           ],
