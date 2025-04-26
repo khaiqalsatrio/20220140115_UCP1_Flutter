@@ -31,11 +31,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Menambahkan Icon di atas form
-              Icon(
-                Icons.lock, // Ikon kunci untuk login
-                size: 100,
-                color: Colors.blue,
-              ),
+              Image.asset('assets/images.png', width: 100, height: 100),
               const SizedBox(height: 20),
               // Menambahkan teks "Selamat Datang" di bawah ikon
               const Text(
