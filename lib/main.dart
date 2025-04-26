@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ucp1_115/presentation/home_page.dart';
 import 'package:flutter_ucp1_115/presentation/login_page.dart';
+import 'package:flutter_ucp1_115/presentation/pelanggan_page.dart';
 import 'package:flutter_ucp1_115/presentation/piket_page.dart';
 
 void main() {
@@ -19,10 +20,10 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/login', // Route awal ketika aplikasi dibuka
       routes: {
-        '/login': (context) => const LoginPage(), // Menunjukkan halaman login
-        '/home': (context) => const HomePage(), // Menunjukkan halaman utama
-        '/piket':
-            (context) => const PiketPage(), // Menunjukkan halaman pemesanan
+        '/login': (context) => const LoginPage(),
+        '/home': (context) => const HomePage(),
+        '/piket': (context) => const PiketPage(),
+        '/pelangan': (context) => const PelangganPage(),
       },
     );
   }
