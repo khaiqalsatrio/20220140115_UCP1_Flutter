@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ucp1_115/presentation/detail_piket_page.dart';
 
 class PiketPage extends StatefulWidget {
   const PiketPage({super.key});
@@ -10,10 +11,12 @@ class PiketPage extends StatefulWidget {
 class _PiketPageState extends State<PiketPage> {
   final TextEditingController namaController = TextEditingController();
   final TextEditingController tugasController = TextEditingController();
-  DateTime selectedDate = DateTime.now();
+  final TextEditingController tanggalController = TextEditingController();
   List<Map<String, String>> piketList = [];
 
-  Future<void> _selectedDate(BuildContext context) async {
+  DateTime selectedDate = DateTime.now(); // ✅ Ditambahkan deklarasi tanggal
+
+  Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
@@ -23,8 +26,17 @@ class _PiketPageState extends State<PiketPage> {
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
+        tanggalController.text =
+            '${picked.day}/${picked.month}/${picked.year}'; // ✅ Otomatis isi tanggal
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    tanggalController.text =
+        '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}'; // ✅ Set awal
   }
 
   @override
@@ -48,7 +60,7 @@ class _PiketPageState extends State<PiketPage> {
             TextFormField(
               controller: namaController,
               decoration: InputDecoration(
-                hintText: 'Masukan Nama Anggota',
+                hintText: 'Masukkan Nama Anggota',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -61,7 +73,7 @@ class _PiketPageState extends State<PiketPage> {
             ),
             const SizedBox(height: 8),
             InkWell(
-              onTap: () => _selectedDate(context),
+              onTap: () => _selectDate(context),
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
@@ -73,7 +85,7 @@ class _PiketPageState extends State<PiketPage> {
                     const Icon(Icons.calendar_today, size: 20),
                     const SizedBox(width: 8),
                     Text(
-                      '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                      tanggalController.text,
                       style: const TextStyle(fontSize: 16),
                     ),
                   ],
@@ -92,7 +104,7 @@ class _PiketPageState extends State<PiketPage> {
                   child: TextFormField(
                     controller: tugasController,
                     decoration: InputDecoration(
-                      hintText: 'Pilih Tugas',
+                      hintText: 'Masukkan Tugas',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -105,16 +117,22 @@ class _PiketPageState extends State<PiketPage> {
                 const SizedBox(width: 8),
                 ElevatedButton(
                   onPressed: () {
-                    if (tugasController.text.isNotEmpty) {
+                    if (tugasController.text.isNotEmpty &&
+                        namaController.text.isNotEmpty) {
                       setState(() {
                         piketList.add({
                           'tugas': tugasController.text,
-                          'tanggal':
-                              '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                          'tanggal': tanggalController.text,
                           'nama': namaController.text,
                         });
                       });
                       tugasController.clear();
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Nama dan tugas tidak boleh kosong!"),
+                        ),
+                      );
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -141,10 +159,23 @@ class _PiketPageState extends State<PiketPage> {
                         return Card(
                           margin: const EdgeInsets.only(bottom: 8),
                           child: ListTile(
-                            title: Text(piket['tugas']!),
+                            title: Text(piket['tugas'] ?? ''),
                             subtitle: Text(
-                              '${piket['nama']} - ${piket['tanggal']}',
+                              '${piket['nama'] ?? ''} - ${piket['tanggal'] ?? ''}',
                             ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => DetailPiketPage(
+                                        nama: piket['nama'] ?? '',
+                                        tanggal: piket['tanggal'] ?? '',
+                                        tugas: piket['tugas'] ?? '',
+                                      ),
+                                ),
+                              );
+                            },
                           ),
                         );
                       }).toList(),

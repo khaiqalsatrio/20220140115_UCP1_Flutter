@@ -100,7 +100,7 @@ class _PelangganPageState extends State<PelangganPage> {
                       context,
                       MaterialPageRoute(
                         builder:
-                            (context) => DetailPiketPage(
+                            (context) => DetailPelangganPage(
                               namaAnggota: namaController.text,
                               email: emailController.text,
                               noHp: noHpController.text,
@@ -122,7 +122,7 @@ class _PelangganPageState extends State<PelangganPage> {
   }
 }
 
-class DetailPiketPage extends StatelessWidget {
+class DetailPelangganPage extends StatelessWidget {
   final String namaAnggota;
   final String email;
   final String noHp;
@@ -130,7 +130,7 @@ class DetailPiketPage extends StatelessWidget {
   final String provinsi;
   final String kodePos;
 
-  const DetailPiketPage({
+  const DetailPelangganPage({
     super.key,
     required this.namaAnggota,
     required this.email,
@@ -143,7 +143,7 @@ class DetailPiketPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Detail Piket')),
+      appBar: AppBar(title: const Text('Detail Pelanggan')),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

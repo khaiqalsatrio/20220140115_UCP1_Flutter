@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ucp1_115/presentation/home_page.dart';
 
-class DetailPiketPage extends StatelessWidget {
+class DetailPelangganPage extends StatelessWidget {
   final String nama;
   final String email;
   final String noHp;
@@ -9,7 +9,7 @@ class DetailPiketPage extends StatelessWidget {
   final String provinsi;
   final String kodepos;
 
-  const DetailPiketPage({
+  const DetailPelangganPage({
     super.key,
     required this.nama,
     required this.email,
