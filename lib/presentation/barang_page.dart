@@ -11,8 +11,6 @@ class BarangPage extends StatefulWidget {
 class _BarangPageState extends State<BarangPage> {
   final _formKey = GlobalKey<FormState>();
   final tanggalTransaksiController = TextEditingController();
-  final jenisTransaksiController = TextEditingController();
-  final jenisBarangController = TextEditingController();
   final jumlahBarangController = TextEditingController();
   final hargaSatuanController = TextEditingController();
 
@@ -66,13 +64,14 @@ class _BarangPageState extends State<BarangPage> {
       setState(() {
         _selectedDate = picked;
         tanggalTransaksiController.text =
-            "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}"; // Mengupdate text controller dengan format tanggal
+            "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}";
       });
     }
   }
 
   @override
   void dispose() {
+    tanggalTransaksiController.dispose();
     jumlahBarangController.dispose();
     hargaSatuanController.dispose();
     super.dispose();
@@ -109,7 +108,7 @@ class _BarangPageState extends State<BarangPage> {
               ),
               const SizedBox(height: 8),
               InkWell(
-                onTap: () => _selectDate(),
+                onTap: _selectDate,
                 child: Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
@@ -192,6 +191,10 @@ class _BarangPageState extends State<BarangPage> {
                             if (value == null || value.isEmpty) {
                               return 'Jumlah barang wajib diisi';
                             }
+                            if (int.tryParse(value) == null ||
+                                int.parse(value) <= 0) {
+                              return 'Jumlah harus lebih dari 0';
+                            }
                             return null;
                           },
                         ),
@@ -247,20 +250,16 @@ class _BarangPageState extends State<BarangPage> {
                           int.tryParse(hargaSatuanController.text) ?? 0;
                       final int totalHarga = jumlahBarang * hargaSatuan;
 
-                      // Pastikan nilai yang benar dikirimkan ke halaman detail
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder:
                               (context) => DetailBarangPage(
                                 tanggal: tanggalTransaksiController.text,
-                                jenisTransaksi:
-                                    _jenisTransaksi ??
-                                    '', // Mengirim jenis transaksi
-                                jenisBarang:
-                                    _jenisBarang ?? '', // Mengirim jenis barang
-                                jumlahBarang: jumlahBarang.toString(),
-                                HargaSatuan: hargaSatuan.toString(),
+                                jenisTransaksi: _jenisTransaksi ?? '',
+                                jenisBarang: _jenisBarang ?? '',
+                                jumlahBarang: jumlahBarangController.text,
+                                hargaSatuan: hargaSatuanController.text,
                                 totalHarga: totalHarga.toString(),
                               ),
                         ),

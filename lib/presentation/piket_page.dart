@@ -43,7 +43,13 @@ class _PiketPageState extends State<PiketPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Data Piket'),
+        title: const Text(
+          'Data Piket',
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 49, 162, 194),
       ),
