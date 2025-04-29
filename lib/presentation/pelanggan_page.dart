@@ -1,161 +1,224 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ucp1_115/presentation/detail_page_pelanggan.dart';
 
 class PelangganPage extends StatefulWidget {
   const PelangganPage({super.key});
-
   @override
   State<PelangganPage> createState() => _PelangganPageState();
 }
 
 class _PelangganPageState extends State<PelangganPage> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController namaController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController noHpController = TextEditingController();
+  final TextEditingController hpController = TextEditingController();
   final TextEditingController alamatController = TextEditingController();
   final TextEditingController provinsiController = TextEditingController();
   final TextEditingController kodePosController = TextEditingController();
 
-  final _formKey = GlobalKey<FormState>();
+  bool _autoValidate = false;
+
+  void resetForm() {
+    namaController.clear();
+    emailController.clear();
+    hpController.clear();
+    alamatController.clear();
+    provinsiController.clear();
+    kodePosController.clear();
+    _formKey.currentState?.reset();
+    setState(() {
+      _autoValidate = false; // Reset autovalidasi juga
+    });
+  }
+
+  InputDecoration buildInputDecoration(String hintText) {
+    return InputDecoration(
+      hintText: hintText,
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+    );
+  }
+
+  Widget buildTextField({
+    required String label,
+    required TextEditingController controller,
+    required String errorMsg,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: controller,
+          decoration: buildInputDecoration(label),
+          autovalidateMode:
+              _autoValidate
+                  ? AutovalidateMode.always
+                  : AutovalidateMode.disabled,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return errorMsg;
+            }
+            return null;
+          },
+          onChanged: (value) {
+            if (_autoValidate) {
+              _formKey.currentState
+                  ?.validate(); // kalau sudah autoValidate, realtime cek
+            }
+          },
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Pelanggan Page')),
-      body: Padding(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 49, 162, 194),
+        iconTheme: const IconThemeData(color: Colors.white),
+        centerTitle: true,
+        title: const Text(
+          'Data Pelanggan',
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextFormField(
+              buildTextField(
+                label: 'Nama Pelanggan',
                 controller: namaController,
-                decoration: const InputDecoration(labelText: 'Nama guest'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Silakan masukkan nama';
-                  }
-                  return null;
-                },
+                errorMsg: 'pelanggan tidak boleh kosong',
               ),
               const SizedBox(height: 16),
-              TextFormField(
-                controller: emailController,
-                decoration: const InputDecoration(labelText: 'Email'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Silakan masukkan Email';
-                  }
-                  return null;
-                },
+
+              Row(
+                children: [
+                  Expanded(
+                    child: buildTextField(
+                      label: 'Email',
+                      controller: emailController,
+                      errorMsg: 'Email tidak boleh kosong',
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: buildTextField(
+                      label: 'No Hp',
+                      controller: hpController,
+                      errorMsg: 'No Hp tidak boleh kosong',
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 16),
-              TextFormField(
-                controller: noHpController,
-                decoration: const InputDecoration(labelText: 'No Hp'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Silakan masukkan No Hp';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
+              buildTextField(
+                label: 'Alamat',
                 controller: alamatController,
-                decoration: const InputDecoration(labelText: 'Alamat'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Silakan masukkan Alamat';
-                  }
-                  return null;
-                },
+                errorMsg: 'Alamat tidak boleh kosong',
               ),
               const SizedBox(height: 16),
-              TextFormField(
-                controller: provinsiController,
-                decoration: const InputDecoration(labelText: 'Provinsi'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Silakan masukkan provinsi';
-                  }
-                  return null;
-                },
+              Row(
+                children: [
+                  Expanded(
+                    child: buildTextField(
+                      label: 'Provinsi',
+                      controller: provinsiController,
+                      errorMsg: 'Provinsi tidak boleh kosong',
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: buildTextField(
+                      label: 'Kode Pos',
+                      controller: kodePosController,
+                      errorMsg: 'Kode Pos tidak boleh kosong',
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 32),
+              // Tombol Simpan
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 49, 162, 194),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _autoValidate = true; // Mulai autovalidasi
+                    });
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) => DetailPelangganPage(
+                                nama: namaController.text,
+                                email: emailController.text,
+                                noHp: hpController.text,
+                                alamat: alamatController.text,
+                                provinsi: provinsiController.text,
+                                kodepos: kodePosController.text,
+                              ),
+                        ),
+                      );
+                    }
+                  },
+                  child: const Text(
+                    'Simpan',
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                  ),
+                ),
               ),
               const SizedBox(height: 16),
-              TextFormField(
-                controller: kodePosController,
-                decoration: const InputDecoration(labelText: 'Kode Pos'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Silakan masukkan Kode Pos';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder:
-                            (context) => DetailPelangganPage(
-                              namaAnggota: namaController.text,
-                              email: emailController.text,
-                              noHp: noHpController.text,
-                              alamat: alamatController.text,
-                              provinsi: provinsiController.text,
-                              kodePos: kodePosController.text,
-                            ),
-                      ),
-                    );
-                  }
-                },
-                child: const Text('Selesai'),
+              // Tombol Reset
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(
+                      color: const Color.fromARGB(255, 49, 162, 194),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  onPressed: resetForm,
+                  child: const Text(
+                    'Reset',
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                ),
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class DetailPelangganPage extends StatelessWidget {
-  final String namaAnggota;
-  final String email;
-  final String noHp;
-  final String alamat;
-  final String provinsi;
-  final String kodePos;
-
-  const DetailPelangganPage({
-    super.key,
-    required this.namaAnggota,
-    required this.email,
-    required this.noHp,
-    required this.alamat,
-    required this.provinsi,
-    required this.kodePos,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Detail Pelanggan')),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Nama: $namaAnggota'),
-            Text('Email: $email'),
-            Text('No HP: $noHp'),
-            Text('Alamat: $alamat'),
-            Text('Provinsi: $provinsi'),
-            Text('Kode Pos: $kodePos'),
-          ],
         ),
       ),
     );
