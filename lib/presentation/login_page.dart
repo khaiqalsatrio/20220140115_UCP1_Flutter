@@ -49,18 +49,12 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 40),
-
-                // Logo
                 Column(
                   children: [
-                    Image.asset(
-                      './assets/images/logo.png',
-                      height: 100,
-                      width: 100,
-                    ),
+                    Image.asset('assets/logo3.jpg', height: 120),
                     const SizedBox(height: 20),
                     const Text(
-                      'SELAMAT DATANG KEMBALI',
+                      'WELCOME',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -71,7 +65,6 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 30),
                   ],
                 ),
-
                 // Email Label & Field
                 _buildTextLabel('Email'),
                 const SizedBox(height: 8),

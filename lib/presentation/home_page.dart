@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
         toolbarHeight: 80,
         title: const Text(
           'Welcome Back',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         leading: Padding(
@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
             alignment: Alignment.centerLeft,
             child: CircleAvatar(
               radius: 24,
-              backgroundImage: AssetImage('assets/logo.jpg'),
+              backgroundImage: AssetImage('assets/logo3.jpg'),
             ),
           ),
         ),
