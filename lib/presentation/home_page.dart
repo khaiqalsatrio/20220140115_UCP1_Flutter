@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ucp1_115/presentation/barang_page.dart';
 import 'package:flutter_ucp1_115/presentation/login_page.dart';
 import 'package:flutter_ucp1_115/presentation/pelanggan_page.dart';
 import 'package:flutter_ucp1_115/presentation/piket_page.dart';
@@ -17,7 +18,10 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
         toolbarHeight: 80,
-        title: const Text('Welcome Back'),
+        title: const Text(
+          'Welcome Back',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         leading: Padding(
           padding: const EdgeInsets.only(left: 13.0, top: 8.0, bottom: 8.0),
@@ -139,7 +143,12 @@ class _HomePageState extends State<HomePage> {
               width: double.infinity,
               height: 100,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BarangPage()),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 49, 162, 194),
                   shape: RoundedRectangleBorder(
