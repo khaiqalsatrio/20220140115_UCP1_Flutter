@@ -20,10 +20,13 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Welcome Back'),
         centerTitle: true,
         leading: Padding(
-          padding: const EdgeInsets.all(1),
-          child: CircleAvatar(
-            radius: 50,
-            backgroundImage: AssetImage('assets/logo.jpg'),
+          padding: const EdgeInsets.only(left: 13.0, top: 8.0, bottom: 8.0),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: CircleAvatar(
+              radius: 24,
+              backgroundImage: AssetImage('assets/logo.jpg'),
+            ),
           ),
         ),
         actions: [
